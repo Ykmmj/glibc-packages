@@ -199,4 +199,9 @@ fi
 	exit 1
 }
 
+if grep -q 'TERMUX_PKG_CONFFILES\|etc/hosts\|etc/resolv.conf' gpkg/resolv-conf/build.sh; then
+	echo "resolv-conf-glibc must not own bionic resolver config files" >&2
+	exit 1
+fi
+
 echo "termuxd glibc config ok"
