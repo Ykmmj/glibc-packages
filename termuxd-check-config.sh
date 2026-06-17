@@ -194,13 +194,8 @@ if find gpkg/gcc-libs -maxdepth 1 -name '*.patch' -print -quit | grep -q .; then
 	exit 1
 fi
 
-[[ -f gpkg/resolv-conf/build.sh ]] || {
-	echo "resolv-conf-glibc recipe is required to satisfy openssl-glibc runtime dependencies" >&2
-	exit 1
-}
-
-if grep -q 'TERMUX_PKG_CONFFILES\|etc/hosts\|etc/resolv.conf' gpkg/resolv-conf/build.sh; then
-	echo "resolv-conf-glibc must not own bionic resolver config files" >&2
+if [[ -e gpkg/resolv-conf/build.sh ]]; then
+	echo "resolv-conf must remain the bionic/classical resolver package, not a glibc package" >&2
 	exit 1
 fi
 
