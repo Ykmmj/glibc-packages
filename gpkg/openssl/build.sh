@@ -3,6 +3,7 @@ TERMUX_PKG_DESCRIPTION="Library implementing the SSL and TLS protocols as well a
 TERMUX_PKG_LICENSE="Apache-2.0"
 TERMUX_PKG_MAINTAINER="@termux-pacman"
 TERMUX_PKG_VERSION=3.4.1
+TERMUX_PKG_REVISION=1
 TERMUX_PKG_SRCURL=https://github.com/openssl/openssl/releases/download/openssl-${TERMUX_PKG_VERSION}/openssl-${TERMUX_PKG_VERSION}.tar.gz
 TERMUX_PKG_SHA256=002a2d6b30b58bf4bea46c43bdd96365aaf8daa6c428782aa4feee06da197df3
 TERMUX_PKG_DEPENDS="ca-certificates-glibc, resolv-conf, zlib-glibc, gcc-libs-glibc"
