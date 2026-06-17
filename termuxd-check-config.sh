@@ -144,7 +144,12 @@ grep -q 'CGCT_DIR:-/data/data/com.termux/cgct' gpkg/gcc-libs/build.sh || {
 	exit 1
 }
 
-grep -q 'patchelf --set-rpath "${TERMUX_PREFIX}/lib"' gpkg/gcc-libs/build.sh || {
+grep -q '/usr/bin/patchelf' gpkg/gcc-libs/build.sh || {
+	echo "gcc-libs-glibc must call host /usr/bin/patchelf instead of any target patchelf in PATH" >&2
+	exit 1
+}
+
+grep -q '"${host_patchelf}" --set-rpath "${TERMUX_PREFIX}/lib"' gpkg/gcc-libs/build.sh || {
 	echo "gcc-libs-glibc must rewrite upstream CGCT runtime RPATH to the termuxd glibc prefix" >&2
 	exit 1
 }

@@ -14,8 +14,13 @@ termux_step_make_install() {
 	if [[ ! -d "${cgct_lib_dir}" ]]; then
 		termux_error_exit "CGCT runtime library directory not found: ${cgct_lib_dir}"
 	fi
-	if ! command -v patchelf >/dev/null; then
-		termux_error_exit "patchelf is required to rewrite CGCT runtime library RPATH"
+	local host_patchelf=/usr/bin/patchelf
+	local host_file=/usr/bin/file
+	if [[ ! -x "${host_patchelf}" ]]; then
+		termux_error_exit "host patchelf is required to rewrite CGCT runtime library RPATH"
+	fi
+	if [[ ! -x "${host_file}" ]]; then
+		termux_error_exit "host file is required to identify CGCT runtime shared libraries"
 	fi
 
 	mkdir -p "${TERMUX_PREFIX}/lib"
@@ -41,8 +46,8 @@ termux_step_make_install() {
 
 	local output_lib
 	while IFS= read -r -d '' output_lib; do
-		if file "${output_lib}" | grep -q 'ELF .* shared object'; then
-			patchelf --set-rpath "${TERMUX_PREFIX}/lib" "${output_lib}"
+		if "${host_file}" "${output_lib}" | grep -q 'ELF .* shared object'; then
+			"${host_patchelf}" --set-rpath "${TERMUX_PREFIX}/lib" "${output_lib}"
 		fi
 	done < <(find "${TERMUX_PREFIX}/lib" -maxdepth 1 -type f -name 'lib*.so*' -print0)
 }
