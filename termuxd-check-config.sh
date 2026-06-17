@@ -159,6 +159,16 @@ grep -q 'chmod u+w "${output_lib}"' gpkg/gcc-libs/build.sh || {
 	exit 1
 }
 
+grep -q 'copied_libs' gpkg/gcc-libs/build.sh || {
+	echo "gcc-libs-glibc must only rewrite the CGCT runtime libraries copied by this package" >&2
+	exit 1
+}
+
+if grep -q 'find "${TERMUX_PREFIX}/lib"' gpkg/gcc-libs/build.sh; then
+	echo "gcc-libs-glibc must not scan the whole glibc lib directory; it would absorb dependency package files" >&2
+	exit 1
+fi
+
 grep -q '\*-gdb.py' gpkg/gcc-libs/build.sh || {
 	echo "gcc-libs-glibc must not package libstdc++ gdb helper scripts from CGCT runtime globs" >&2
 	exit 1

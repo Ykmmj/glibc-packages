@@ -25,6 +25,7 @@ termux_step_make_install() {
 
 	mkdir -p "${TERMUX_PREFIX}/lib"
 
+	local -a copied_libs=()
 	local pattern runtime_lib
 	for pattern in \
 		libgcc_s.so* \
@@ -40,15 +41,17 @@ termux_step_make_install() {
 			[[ "$(basename "${runtime_lib}")" == *-gdb.py ]] && continue
 			if [[ -e "${runtime_lib}" || -L "${runtime_lib}" ]]; then
 				cp -a "${runtime_lib}" "${TERMUX_PREFIX}/lib/"
+				copied_libs+=("${TERMUX_PREFIX}/lib/$(basename "${runtime_lib}")")
 			fi
 		done
 	done
 
 	local output_lib
-	while IFS= read -r -d '' output_lib; do
+	for output_lib in "${copied_libs[@]}"; do
+		[[ -f "${output_lib}" && ! -L "${output_lib}" ]] || continue
 		if "${host_file}" "${output_lib}" | grep -q 'ELF .* shared object'; then
 			chmod u+w "${output_lib}"
 			"${host_patchelf}" --set-rpath "${TERMUX_PREFIX}/lib" "${output_lib}"
 		fi
-	done < <(find "${TERMUX_PREFIX}/lib" -maxdepth 1 -type f -name 'lib*.so*' -print0)
+	done
 }
