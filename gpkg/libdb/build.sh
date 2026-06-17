@@ -19,5 +19,6 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 "
 
 termux_step_pre_configure() {
+	export CFLAGS="${CFLAGS:-} -std=gnu17"
 	TERMUX_PKG_SRCDIR=$TERMUX_PKG_SRCDIR/dist
 }

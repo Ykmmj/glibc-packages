@@ -109,4 +109,9 @@ grep -q -- '-std=gnu17' gpkg/p11-kit/build.sh || {
 	exit 1
 }
 
+grep -q -- '-std=gnu17' gpkg/libdb/build.sh || {
+	echo "libdb-glibc must pin gnu17 so Berkeley DB legacy empty-prototype function pointers build before C23" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
