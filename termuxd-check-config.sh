@@ -83,4 +83,9 @@ grep -q -- '--enable-gettext=no' gpkg/attr/build.sh || {
 	exit 1
 }
 
+grep -q 'github.com/madler/zlib/releases/download/v${TERMUX_PKG_VERSION}' gpkg/zlib/build.sh || {
+	echo "zlib-glibc must use the stable upstream release URL instead of the rolling zlib.net current URL" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
