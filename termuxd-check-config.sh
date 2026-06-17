@@ -96,5 +96,9 @@ grep -q -- '-std=gnu17' gpkg/krb5/build.sh || {
 	echo "krb5-glibc must pin gnu17 so bundled ss builds with pre-C23 empty-prototype semantics" >&2
 	exit 1
 }
+grep -q 'TERMUX_PKG_GIT_BRANCH=main' gpkg/publicsuffix-list/build.sh || {
+	echo "publicsuffix-list-glibc must clone the current upstream main branch before checking out its pinned commit" >&2
+	exit 1
+}
 
 echo "termuxd glibc config ok"
