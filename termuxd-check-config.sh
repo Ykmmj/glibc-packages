@@ -199,4 +199,9 @@ if [[ -e gpkg/resolv-conf/build.sh ]]; then
 	exit 1
 fi
 
+grep -q 'ln -sf \$TERMUX_PREFIX_CLASSICAL/etc/resolv.conf \$TERMUX_PREFIX/etc' gpkg/openssl/build.sh || {
+	echo "openssl-glibc must create resolver config symlinks idempotently" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
