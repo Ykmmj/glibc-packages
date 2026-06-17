@@ -26,6 +26,10 @@ termux_step_post_get_source() {
 	TERMUX_PKG_SRCDIR+="/src"
 }
 
+termux_step_pre_configure() {
+	export CFLAGS="${CFLAGS:-} -std=gnu17"
+}
+
 termux_step_post_make_install() {
 	# Enable logging to STDERR by default
 	echo -e "\tdefault = STDERR" >> $TERMUX_PKG_SRCDIR/config-files/krb5.conf

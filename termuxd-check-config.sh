@@ -92,5 +92,9 @@ if grep -q 'e2fsprogs-glibc' gpkg/krb5/build.sh || grep -q -- '--with-system-et\
 	echo "krb5-glibc must use bundled et/ss to avoid the krb5/e2fsprogs/util-linux dependency cycle" >&2
 	exit 1
 fi
+grep -q -- '-std=gnu17' gpkg/krb5/build.sh || {
+	echo "krb5-glibc must pin gnu17 so bundled ss builds with pre-C23 empty-prototype semantics" >&2
+	exit 1
+}
 
 echo "termuxd glibc config ok"
