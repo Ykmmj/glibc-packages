@@ -114,4 +114,9 @@ grep -q -- '-std=gnu17' gpkg/libdb/build.sh || {
 	exit 1
 }
 
+if grep -q -- '--enable-stl' gpkg/libdb/build.sh; then
+	echo "libdb-glibc must not enable Berkeley DB STL bindings; they require unconfigured TLS support in this cross build" >&2
+	exit 1
+fi
+
 echo "termuxd glibc config ok"

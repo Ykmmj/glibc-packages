@@ -15,7 +15,6 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --enable-static
 --enable-cxx
 --enable-dbm
---enable-stl
 "
 
 termux_step_pre_configure() {
