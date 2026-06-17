@@ -100,5 +100,9 @@ grep -q 'TERMUX_PKG_GIT_BRANCH=main' gpkg/publicsuffix-list/build.sh || {
 	echo "publicsuffix-list-glibc must clone the current upstream main branch before checking out its pinned commit" >&2
 	exit 1
 }
+grep -q -- '-std=gnu17' gpkg/libgmp/build.sh || {
+	echo "libgmp-glibc must pin gnu17 so GMP configure works with pre-C23 empty-prototype semantics" >&2
+	exit 1
+}
 
 echo "termuxd glibc config ok"

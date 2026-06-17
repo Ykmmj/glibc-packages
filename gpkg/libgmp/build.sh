@@ -7,3 +7,9 @@ TERMUX_PKG_REVISION=2
 TERMUX_PKG_SRCURL=https://mirrors.kernel.org/gnu/gmp/gmp-${TERMUX_PKG_VERSION}.tar.xz
 TERMUX_PKG_SHA256=a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898
 TERMUX_PKG_DEPENDS="gcc-libs-glibc"
+TERMUX_PKG_EXTRA_CONFIGURE_ARGS="--enable-cxx"
+
+termux_step_pre_configure() {
+	export CFLAGS="${CFLAGS:-} -std=gnu17"
+	export CXXFLAGS="${CXXFLAGS:-} -L$TERMUX_PREFIX/lib -Wl,-rpath=$TERMUX_PREFIX/lib"
+}
