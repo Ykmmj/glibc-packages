@@ -49,6 +49,11 @@ runner_depends="$(grep '^TERMUX_PKG_DEPENDS=' gpkg/glibc-runner/build.sh)"
 
 grep -q '@TERMUX_PREFIX_CLASSICAL@' gpkg/glibc-runner/glibc-runner.sh
 
+grep -q '^unset SHELL$' gpkg/glibc-runner/glibc-runner.bashrc || {
+	echo "glibc-runner must ignore inherited Android SHELL values so -s enters glibc bash" >&2
+	exit 1
+}
+
 grep -q 'export CGCT_DIR="/data/data/com.termux/cgct"' cgct/glibc-cgct/setup-cgct || {
 	echo "glibc-cgct setup must keep the upstream CGCT path" >&2
 	exit 1
