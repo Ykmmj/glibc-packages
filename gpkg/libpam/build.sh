@@ -17,7 +17,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 "
 
 termux_step_pre_configure() {
-	termux_download https://docbook.org/xml/5.0/rng/docbookxi.rng \
+	termux_download https://cdn.docbook.org/schema/5.0/rng/docbookxi.rng \
 		$TERMUX_PKG_SRCDIR/docbookxi.rng \
-		SKIP_CHECKSUM
+		58ab403623f3c26cee9499e5dc40ef9a10c27329b7ccd27dbfb5337fc41aed3e
 }
