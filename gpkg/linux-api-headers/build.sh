@@ -13,11 +13,17 @@ termux_step_make() {
 			unset CFLAGS CXXFLAGS CC CXX AR RANLIB NM CXXFILT
 			export PATH="/usr/bin"
 		fi
-		make -C "${TERMUX_PKG_SRCDIR}" ARCH="${LINUX_ARCH}" mrproper
+		make -C "${TERMUX_PKG_SRCDIR}" HOSTCC=/usr/bin/gcc ARCH="${LINUX_ARCH}" mrproper
 	)
 }
 
 termux_step_make_install() {
-	make -C "${TERMUX_PKG_SRCDIR}" INSTALL_HDR_PATH="${TERMUX__PREFIX__INCLUDE_DIR}" ARCH="${LINUX_ARCH}" headers_install
-	rm -r "${TERMUX__PREFIX__INCLUDE_DIR}/drm"
+	(
+		if [ "$TERMUX_ON_DEVICE_BUILD" = "false" ]; then
+			unset CFLAGS CXXFLAGS CC CXX AR RANLIB NM CXXFILT
+			export PATH="/usr/bin"
+		fi
+		make -C "${TERMUX_PKG_SRCDIR}" HOSTCC=/usr/bin/gcc INSTALL_HDR_PATH="${TERMUX__PREFIX__INCLUDE_DIR}" ARCH="${LINUX_ARCH}" headers_install
+		rm -r "${TERMUX__PREFIX__INCLUDE_DIR}/drm"
+	)
 }

@@ -54,4 +54,9 @@ grep -q 'export CGCT_DIR="/data/data/com.termux/cgct"' cgct/glibc-cgct/setup-cgc
 	exit 1
 }
 
+grep -q 'HOSTCC=/usr/bin/gcc' gpkg/linux-api-headers/build.sh || {
+	echo "linux-api-headers must build kernel host tools with the system host gcc" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
