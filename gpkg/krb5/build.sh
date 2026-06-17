@@ -6,14 +6,12 @@ TERMUX_PKG_MAINTAINER="@termux-pacman"
 TERMUX_PKG_VERSION=1.21.3
 TERMUX_PKG_SRCURL=https://kerberos.org/dist/krb5/$(grep -oP "^\d+\.\d+" <<< $TERMUX_PKG_VERSION)/krb5-$TERMUX_PKG_VERSION.tar.gz
 TERMUX_PKG_SHA256=b7a4cd5ead67fb08b980b21abd150ff7217e85ea320c9ed0c6dadd304840ad35
-TERMUX_PKG_DEPENDS="e2fsprogs-glibc, libverto-glibc"
+TERMUX_PKG_DEPENDS="libverto-glibc"
 TERMUX_PKG_CONFFILES="glibc/etc/krb5.conf glibc/var/krb5kdc/kdc.conf"
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-static
 --sbindir=$TERMUX_PREFIX/bin
 --enable-shared
---with-system-et
---with-system-ss
 --without-tcl
 --without-ldap
 --enable-dns-for-realm

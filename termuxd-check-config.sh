@@ -88,4 +88,9 @@ grep -q 'github.com/madler/zlib/releases/download/v${TERMUX_PKG_VERSION}' gpkg/z
 	exit 1
 }
 
+if grep -q 'e2fsprogs-glibc' gpkg/krb5/build.sh || grep -q -- '--with-system-et\|--with-system-ss' gpkg/krb5/build.sh; then
+	echo "krb5-glibc must use bundled et/ss to avoid the krb5/e2fsprogs/util-linux dependency cycle" >&2
+	exit 1
+fi
+
 echo "termuxd glibc config ok"
