@@ -59,4 +59,9 @@ grep -q 'HOSTCC=/usr/bin/gcc' gpkg/linux-api-headers/build.sh || {
 	exit 1
 }
 
+grep -q 'TERMUX_PKG_VERSION=6.6.20260307+really6.5.20250830' gpkg/ncurses/build.sh || {
+	echo "ncurses-glibc must stay aligned with the bionic ncurses version" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
