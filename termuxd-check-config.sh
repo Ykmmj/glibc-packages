@@ -64,4 +64,9 @@ grep -q 'TERMUX_PKG_VERSION=6.6.20260307+really6.5.20250830' gpkg/ncurses/build.
 	exit 1
 }
 
+grep -q -- '-DCMAKE_POLICY_VERSION_MINIMUM=3.5' gpkg/json-c/build.sh || {
+	echo "json-c-glibc must keep the CMake 4 compatibility policy minimum" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
