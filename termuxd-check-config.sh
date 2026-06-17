@@ -69,4 +69,18 @@ grep -q -- '-DCMAKE_POLICY_VERSION_MINIMUM=3.5' gpkg/json-c/build.sh || {
 	exit 1
 }
 
+grep -q 'TERMUX_PKG_DEPENDS="attr"$' gpkg/libacl/build.sh || {
+	echo "libacl-glibc must depend on bare attr so the glibc build graph can order attr-glibc first" >&2
+	exit 1
+}
+
+if grep -q '^TERMUX_PKG_BUILD_DEPENDS=.*gettext' gpkg/attr/build.sh; then
+	echo "attr-glibc must not build-depend on gettext-glibc because gettext pulls libacl-glibc" >&2
+	exit 1
+fi
+grep -q -- '--enable-gettext=no' gpkg/attr/build.sh || {
+	echo "attr-glibc must disable gettext like the bionic attr recipe" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
