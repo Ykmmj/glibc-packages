@@ -1,27 +1,9 @@
 {
-  "pkg_format": "pacman",
+  "pkg_format": "debian",
   "gpkg": {
-    "name": "gpkg",
-    "distribution": "gpkg",
-    "component": "gpkg",
-    "url": "https://sync.termux-pacman.dev/gpkg"
-  },
-  "packages": {
-    "name": "main",
-    "distribution": "main",
+    "name": "termuxd-glibc",
+    "distribution": "stable",
     "component": "main",
-    "url": "https://sync.termux-pacman.dev/main"
-  },
-  "x11-packages": {
-    "name": "x11",
-    "distribution": "x11",
-    "component": "x11",
-    "url": "https://sync.termux-pacman.dev/x11"
-  },
-  "root-packages": {
-    "name": "root",
-    "distribution": "root",
-    "component": "root",
-    "url": "https://sync.termux-pacman.dev/root"
+    "url": "https://ykmmj.github.io/termuxd-packages/apt/glibc"
   }
 }
