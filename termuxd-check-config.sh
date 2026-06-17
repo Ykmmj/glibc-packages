@@ -154,6 +154,11 @@ grep -q '"${host_patchelf}" --set-rpath "${TERMUX_PREFIX}/lib"' gpkg/gcc-libs/bu
 	exit 1
 }
 
+grep -q 'chmod u+w "${output_lib}"' gpkg/gcc-libs/build.sh || {
+	echo "gcc-libs-glibc must make copied CGCT runtime libraries writable before patchelf" >&2
+	exit 1
+}
+
 grep -q '\*-gdb.py' gpkg/gcc-libs/build.sh || {
 	echo "gcc-libs-glibc must not package libstdc++ gdb helper scripts from CGCT runtime globs" >&2
 	exit 1

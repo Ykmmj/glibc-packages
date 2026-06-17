@@ -47,6 +47,7 @@ termux_step_make_install() {
 	local output_lib
 	while IFS= read -r -d '' output_lib; do
 		if "${host_file}" "${output_lib}" | grep -q 'ELF .* shared object'; then
+			chmod u+w "${output_lib}"
 			"${host_patchelf}" --set-rpath "${TERMUX_PREFIX}/lib" "${output_lib}"
 		fi
 	done < <(find "${TERMUX_PREFIX}/lib" -maxdepth 1 -type f -name 'lib*.so*' -print0)
