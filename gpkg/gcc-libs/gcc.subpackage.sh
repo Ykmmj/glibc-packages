@@ -1,0 +1,4 @@
+TERMUX_SUBPKG_DESCRIPTION="Compatibility metadata for packages that still reference gcc-glibc"
+TERMUX_SUBPKG_PLATFORM_INDEPENDENT=true
+TERMUX_SUBPKG_DEPEND_ON_PARENT=false
+TERMUX_SUBPKG_INCLUDE=""

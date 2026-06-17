@@ -144,10 +144,30 @@ grep -q 'CGCT_DIR:-/data/data/com.termux/cgct' gpkg/gcc-libs/build.sh || {
 	exit 1
 }
 
-if [[ -e gpkg/gcc-libs/gcc.subpackage.sh ]]; then
-	echo "gcc-libs-glibc standalone MVP must not emit a full gcc-glibc subpackage" >&2
+grep -q 'patchelf --set-rpath "${TERMUX_PREFIX}/lib"' gpkg/gcc-libs/build.sh || {
+	echo "gcc-libs-glibc must rewrite upstream CGCT runtime RPATH to the termuxd glibc prefix" >&2
 	exit 1
-fi
+}
+
+grep -q '\*-gdb.py' gpkg/gcc-libs/build.sh || {
+	echo "gcc-libs-glibc must not package libstdc++ gdb helper scripts from CGCT runtime globs" >&2
+	exit 1
+}
+
+[[ -f gpkg/gcc-libs/gcc.subpackage.sh ]] || {
+	echo "gcc-glibc metadata placeholder is required so buildorder accepts legacy clang-glibc deps" >&2
+	exit 1
+}
+
+grep -q '^TERMUX_SUBPKG_PLATFORM_INDEPENDENT=true$' gpkg/gcc-libs/gcc.subpackage.sh || {
+	echo "gcc-glibc placeholder must stay platform independent so an empty package is not emitted" >&2
+	exit 1
+}
+
+grep -q '^TERMUX_SUBPKG_INCLUDE=""$' gpkg/gcc-libs/gcc.subpackage.sh || {
+	echo "gcc-glibc placeholder must not include compiler files" >&2
+	exit 1
+}
 
 if find gpkg/gcc-libs -maxdepth 1 -name '*.patch' -print -quit | grep -q .; then
 	echo "gcc-libs-glibc uses no source tree, so old GCC patch files must not remain" >&2
