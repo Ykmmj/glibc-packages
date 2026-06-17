@@ -49,8 +49,8 @@ runner_depends="$(grep '^TERMUX_PKG_DEPENDS=' gpkg/glibc-runner/build.sh)"
 
 grep -q '@TERMUX_PREFIX_CLASSICAL@' gpkg/glibc-runner/glibc-runner.sh
 
-grep -q '^unset SHELL$' gpkg/glibc-runner/glibc-runner.bashrc || {
-	echo "glibc-runner must ignore inherited Android SHELL values so -s enters glibc bash" >&2
+grep -q '^export SHELL="${GLIBC_PREFIX}/bin/bash"$' gpkg/glibc-runner/glibc-runner.bashrc || {
+	echo "glibc-runner must override inherited Android SHELL values so -s enters glibc bash" >&2
 	exit 1
 }
 

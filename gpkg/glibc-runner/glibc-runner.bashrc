@@ -5,4 +5,4 @@ if [ -f "${GLIBC_PREFIX}/etc/locale.conf" ]; then
 	source "${GLIBC_PREFIX}/etc/locale.conf"
 fi
 
-unset SHELL
+export SHELL="${GLIBC_PREFIX}/bin/bash"
