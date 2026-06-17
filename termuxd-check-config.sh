@@ -119,4 +119,14 @@ if grep -q -- '--enable-stl' gpkg/libdb/build.sh; then
 	exit 1
 fi
 
+if grep '^TERMUX_PKG_DEPENDS=' gpkg/glibc-runner/build.sh | grep -q 'strace-glibc'; then
+	echo "glibc-runner must keep strace-glibc optional so the standalone shell MVP does not force perl-glibc" >&2
+	exit 1
+fi
+
+grep -q '^TERMUX_PKG_SUGGESTS="strace-glibc"$' gpkg/glibc-runner/build.sh || {
+	echo "glibc-runner should suggest strace-glibc for optional debug mode" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
