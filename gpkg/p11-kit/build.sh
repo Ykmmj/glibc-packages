@@ -11,3 +11,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --disable-static
 --with-trust-paths=$TERMUX_PREFIX/etc/ca-certificates/trust-source:$TERMUX_PREFIX/share/ca-certificates/trust-source
 "
+
+termux_step_pre_configure() {
+	export CFLAGS="${CFLAGS:-} -std=gnu17"
+}

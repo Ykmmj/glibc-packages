@@ -104,5 +104,9 @@ grep -q -- '-std=gnu17' gpkg/libgmp/build.sh || {
 	echo "libgmp-glibc must pin gnu17 so GMP configure works with pre-C23 empty-prototype semantics" >&2
 	exit 1
 }
+grep -q -- '-std=gnu17' gpkg/p11-kit/build.sh || {
+	echo "p11-kit-glibc must pin gnu17 so its legacy bool compatibility typedef builds before C23" >&2
+	exit 1
+}
 
 echo "termuxd glibc config ok"
