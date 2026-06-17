@@ -134,4 +134,29 @@ grep -q '^TERMUX_PKG_SHA256=175d7c9eac6f9fc3b949d1a2cee5f5d3ace61420d418d8213369
 	exit 1
 }
 
+grep -q '^TERMUX_PKG_SKIP_SRC_EXTRACT=true$' gpkg/gcc-libs/build.sh || {
+	echo "gcc-libs-glibc must package upstream CGCT runtime libs without rebuilding GCC" >&2
+	exit 1
+}
+
+grep -q 'CGCT_DIR:-/data/data/com.termux/cgct' gpkg/gcc-libs/build.sh || {
+	echo "gcc-libs-glibc must reuse the upstream CGCT runtime library directory" >&2
+	exit 1
+}
+
+if [[ -e gpkg/gcc-libs/gcc.subpackage.sh ]]; then
+	echo "gcc-libs-glibc standalone MVP must not emit a full gcc-glibc subpackage" >&2
+	exit 1
+fi
+
+if find gpkg/gcc-libs -maxdepth 1 -name '*.patch' -print -quit | grep -q .; then
+	echo "gcc-libs-glibc uses no source tree, so old GCC patch files must not remain" >&2
+	exit 1
+fi
+
+[[ -f gpkg/resolv-conf/build.sh ]] || {
+	echo "resolv-conf-glibc recipe is required to satisfy openssl-glibc runtime dependencies" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
