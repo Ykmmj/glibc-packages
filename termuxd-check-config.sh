@@ -129,4 +129,9 @@ grep -q '^TERMUX_PKG_SUGGESTS="strace-glibc"$' gpkg/glibc-runner/build.sh || {
 	exit 1
 }
 
+grep -q '^TERMUX_PKG_SHA256=175d7c9eac6f9fc3b949d1a2cee5f5d3ace61420d418d8213369eb6aff18d28f$' gpkg/termux-exec/build.sh || {
+	echo "termux-exec-glibc checksum must match the current v1.0 GitHub archive" >&2
+	exit 1
+}
+
 echo "termuxd glibc config ok"
