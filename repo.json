@@ -4,6 +4,6 @@
     "name": "termuxd-glibc",
     "distribution": "stable",
     "component": "main",
-    "url": "https://ykmmj.github.io/termuxd-packages/apt/glibc"
+    "url": "https://ykmmj.github.io/termuxd-packages-repo/apt/glibc"
   }
 }

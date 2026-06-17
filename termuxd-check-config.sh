@@ -37,7 +37,7 @@ require_equal() {
 }
 
 require_equal "$(read_json '.pkg_format')" "debian" "pkg_format"
-require_equal "$(read_json '.gpkg.url')" "https://ykmmj.github.io/termuxd-packages/apt/glibc" "gpkg.url"
+require_equal "$(read_json '.gpkg.url')" "https://ykmmj.github.io/termuxd-packages-repo/apt/glibc" "gpkg.url"
 require_equal "$(read_json '.gpkg.distribution')" "stable" "gpkg.distribution"
 require_equal "$(read_json '.gpkg.component')" "main" "gpkg.component"
 
